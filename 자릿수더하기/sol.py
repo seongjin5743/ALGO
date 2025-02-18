@@ -12,3 +12,5 @@ def solution1(n):
         answer += b
         n = a
     return answer
+def solution2(n):
+    return sum(map(int, list(str(n))))
