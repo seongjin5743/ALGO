@@ -14,11 +14,11 @@ for _ in range(k):
 
 l = int(input())
 
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
+dy = [0, 1, 0, -1]
+dx = [1, 0, -1, 0]
 
 def solution():
-    sx, sy = 0, 0
+    sy, sx = 0, 0
 
     snake = deque([(0, 0)])
     snake_set = set([(0, 0)])
@@ -34,20 +34,20 @@ def solution():
     idx = 0
     while True:
         answer += 1
-        sx, sy = sx + dx[dir], sy + dy[dir]
+        sy, sx = sy + dy[dir], sx + dx[dir]
 
-        if sx < 0 or sy < 0 or sx >= n or sy >= n or (sx, sy) in snake_set:
+        if sy < 0 or sx < 0 or sy >= n or sx >= n or (sy, sx) in snake_set:
             return answer
 
-        if maze[sx][sy] == 1:
-            maze[sx][sy] = 0
-            snake.append((sx, sy))
-            snake_set.add((sx, sy))
+        if maze[sy][sx] == 1:
+            maze[sy][sx] = 0
+            snake.append((sy, sx))
+            snake_set.add((sy, sx))
         else:
             tail = snake.popleft()
             snake_set.remove(tail)
-            snake.append((sx, sy))
-            snake_set.add((sx, sy))
+            snake.append((sy, sx))
+            snake_set.add((sy, sx))
 
         if idx < l and answer == commands[idx][0]:
             _, ld = commands[idx]
