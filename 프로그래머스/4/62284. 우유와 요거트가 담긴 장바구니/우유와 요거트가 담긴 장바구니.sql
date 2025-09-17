@@ -1,0 +1,5 @@
+SELECT cart_id
+FROM CART_PRODUCTS
+WHERE Name IN ('Milk', 'Yogurt')
+GROUP BY cart_id
+HAVING COUNT(DISTINCT Name) = 2;
