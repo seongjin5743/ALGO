@@ -17,5 +17,5 @@ def solution(n, results):
     for result in distance:
         if result.count(0) == 1:
             answer += 1
-    print(distance)
+
     return answer
