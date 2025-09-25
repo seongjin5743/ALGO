@@ -15,9 +15,8 @@ def dfs(v, i):
         elif visited[j] and j == i:
             result.append(j)
 
-for i in range(1, n + 1):
+for i in range(1,  n + 1):
     visited = [False] * (n + 1)
-
     dfs(i, i)
 
 print(len(result))
