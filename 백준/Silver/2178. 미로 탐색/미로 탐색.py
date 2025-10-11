@@ -1,35 +1,34 @@
+import sys
+from collections import deque
+
+input = sys.stdin.readline
+
 n, m = map(int, input().split())
 
-maze = []
-for _ in range(n):
-    ma = list(map(int, input()))
-    maze.append(ma)
+maze = [list(map(int, input().strip())) for _ in range(n)]
 
-from collections import deque
+visited = [[False] * m for _ in range(n)]
 
 dx = [0,0,1,-1]
 dy = [1,-1,0,0]
 
 def bfs(x, y):
     queue = deque()
-    queue.append((x, y))
+    queue.append((x, y, 1))
+    visited[y][x] = True
 
     while queue:
-        x, y = queue.popleft()
+        x, y, cnt = queue.popleft()
 
+        if x == m - 1 and y == n - 1:
+            return cnt
+        
         for i in range(4):
             nx, ny = x + dx[i], y + dy[i]
-
-            if nx < 0 or ny < 0 or nx >= n or ny >= m:
-                continue
             
-            if maze[nx][ny] == 0:
-                continue
-            
-            if maze[nx][ny] == 1:
-                maze[nx][ny] = maze[x][y] + 1
-                queue.append((nx, ny))
-    return maze[-1][-1]
-
+            if 0 <= nx < m and 0 <= ny < n and not visited[ny][nx]:
+                if maze[ny][nx] == 1:
+                    visited[ny][nx] = True
+                    queue.append((nx, ny, cnt + 1))
 
 print(bfs(0,0))
