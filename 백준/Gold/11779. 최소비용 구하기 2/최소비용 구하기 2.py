@@ -31,7 +31,7 @@ def short(start):
             continue
 
         for to, d in graph[now]:
-            cost = dis + d
+            cost = d + dis
             if cost < distance[to]:
                 distance[to] = cost
                 prev[to] = now
@@ -47,6 +47,7 @@ while now != city_num:
     path.append(now)
 
 path.reverse()
+
 print(distance[end_num])
 print(len(path))
 print(*path)
