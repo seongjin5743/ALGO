@@ -22,13 +22,12 @@ def bfs(x, y):
 
         if x == m - 1 and y == n - 1:
             return cnt
-        
+
         for i in range(4):
             nx, ny = x + dx[i], y + dy[i]
-            
-            if 0 <= nx < m and 0 <= ny < n and not visited[ny][nx]:
-                if maze[ny][nx] == 1:
-                    visited[ny][nx] = True
-                    queue.append((nx, ny, cnt + 1))
 
-print(bfs(0,0))
+            if 0 <= nx < m and 0 <= ny < n and not visited[ny][nx] and maze[ny][nx] == 1:
+                visited[ny][nx] = True
+                queue.append((nx, ny, cnt + 1))
+
+print(bfs(0, 0))
