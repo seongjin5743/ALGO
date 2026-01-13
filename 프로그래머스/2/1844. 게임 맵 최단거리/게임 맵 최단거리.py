@@ -4,27 +4,29 @@ def solution(maps):
     dx = [0, 0, 1, -1]
     dy = [1, -1, 0, 0]
     
+    n = len(maps)
+    m = len(maps[0])
+    
+    visited = [[False] * m for _ in range(n)]
+    
     def bfs(x, y):
         queue = deque()
-        queue.append((x, y))
+        queue.append((x, y, 1))
+        
+        visited[y][x] = True
         
         while queue:
-            x, y = queue.popleft()
+            x, y, num = queue.popleft()
+            
+            if x == m - 1 and y == n - 1:
+                return num
             
             for i in range(4):
-                nx = x + dx[i]
-                ny = y + dy[i]
+                nx, ny = x + dx[i], y + dy[i]
                 
-                if nx < 0 or ny < 0 or nx >= len(maps) or ny >= len(maps[0]):
-                    continue
-                    
-                if maps[nx][ny] == 0:
-                    continue
-                    
-                if maps[nx][ny] == 1:
-                    maps[nx][ny] = maps[x][y] + 1
-                    queue.append((nx, ny))
-        return maps[-1][-1]
+                if 0 <= nx < m and 0 <= ny < n and not visited[ny][nx] and maps[ny][nx] == 1:
+                    visited[ny][nx] = True
+                    queue.append((nx, ny, num + 1))
+        return -1
     
-    result = bfs(0, 0)
-    return -1 if result == 1 else result
+    return bfs(0,0)
