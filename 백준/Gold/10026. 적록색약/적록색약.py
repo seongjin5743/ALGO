@@ -1,52 +1,62 @@
+import sys
 from collections import deque
+
+input = sys.stdin.readline
 
 n = int(input())
 
-maze = []
-for _ in range(n):
-    ma = list(input())
-    maze.append(ma)
+maze_t = [list(input().strip()) for _ in range(n)]
+visited_t = [[False] * n for _ in range(n)]
 
-dx = [0,0,1,-1]
+maze_j = [row[:] for row in maze_t]
+visited_j = [[False] * n for _ in range(n)]
+for y in range(n):
+    for x in range(n):
+        if maze_j[y][x] == 'G':
+            maze_j[y][x] = 'R'
+
+dx = [0,0,-1,1]
 dy = [1,-1,0,0]
 
-def bfs(x, y, visited):
+def bfs_t(x, y, color):
     queue = deque()
-
+    visited_t[y][x] = True
     queue.append((x, y))
-    visited[x][y] = True
-
-    color = maze[x][y]
 
     while queue:
         x, y = queue.popleft()
-        
+
         for i in range(4):
             nx, ny = x + dx[i], y + dy[i]
 
-            if nx < 0 or ny < 0 or nx >= n or ny >= n:
-                continue
-
-            if not visited[nx][ny] and maze[nx][ny] == color:
-                visited[nx][ny] = True
+            if 0 <= nx < n and 0 <= ny < n and not visited_t[ny][nx] and maze_t[ny][nx] == color:
                 queue.append((nx, ny))
+                visited_t[ny][nx] = True
 
-count = 0
-visited = [[False] * n for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if not visited[i][j]:
-            bfs(i, j, visited)
-            count += 1
+def bfs_j(x, y, color):
+    queue = deque()
+    visited_j[y][x] = True
+    queue.append((x, y))
 
+    while queue:
+        x, y = queue.popleft()
 
-j_count = 0
-visited = [[False] * n for _ in range(n)]
-maze = [['R' if c == 'G' else c for c in row] for row in maze]
+        for i in range(4):
+            nx, ny = x + dx[i], y + dy[i]
 
-for i in range(n):
-    for j in range(n):
-        if not visited[i][j]:
-            bfs(i, j, visited)
-            j_count += 1
-print(count, j_count)
+            if 0 <= nx < n and 0 <= ny < n and not visited_j[ny][nx] and maze_j[ny][nx] == color:
+                queue.append((nx, ny))
+                visited_j[ny][nx] = True
+
+sum_t, sum_j = 0, 0
+
+for y in range(n):
+    for x in range(n):
+        if not visited_t[y][x]:
+            bfs_t(x, y, maze_t[y][x])
+            sum_t += 1
+        if not visited_j[y][x]:
+            bfs_j(x, y, maze_j[y][x])
+            sum_j += 1
+
+print(sum_t, sum_j)
