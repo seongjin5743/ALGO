@@ -1,36 +1,36 @@
 import sys
 input = sys.stdin.readline
 
-N, M = map(int, input().split())
-arr = [list(map(int, input().split())) for _ in range (N)]
+n, m = map(int, input().split())
+arr = [list(map(int, input().split())) for _ in range(n)]
 
-v= [[0] * M for _ in range (N)]
+visited = [[False] * m for _ in range(n)]
 
 dx = [-1,1,0,0]
 dy = [0,0,-1,1]
 
-def dfs(n, temp, lst):
+def dfs(depth, temp, lst):
     global ans
 
-    if n == 4 :
-        ans = max(temp, ans)
+    if depth == 4:
+        ans = max(ans, temp)
         return
-    
-    for cx, cy in lst :
-        for i in range (4) :
-            nx, ny = cx + dx[i], cy + dy[i]
-            # 범위, 방문 검사
-            if 0 <= nx < N and 0<= ny < M and v[nx][ny] == 0:
-                v[nx][ny] = 1
-                dfs(n+1, temp + arr[nx][ny], lst + [(nx, ny)])
-                v[nx][ny] = 0
 
+    for y, x in lst:
+        for i in range(4):
+            ny = y + dy[i]
+            nx = x + dx[i]
+
+            if 0 <= ny < n and 0 <= nx < m and not visited[ny][nx]:
+                visited[ny][nx] = True
+                dfs(depth + 1, temp + arr[ny][nx], lst + [(ny, nx)])
+                visited[ny][nx] = False
 
 ans = 0
 
-for i in range (N):
-    for j in range (M):
-        v[i][j] = 1
-        dfs(1, arr[i][j], [(i,j)])
+for y in range(n):
+    for x in range(m):
+        visited[y][x] = True
+        dfs(1, arr[y][x], [(y, x)])
 
 print(ans)
