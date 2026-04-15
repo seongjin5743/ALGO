@@ -28,8 +28,6 @@ def bfs():
     
     for y, x in melt:
         maze[y][x] = 0
-        
-    return len(melt)
 
 time = 0
 cheese = 0
