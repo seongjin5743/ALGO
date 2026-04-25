@@ -6,7 +6,10 @@ for i in range(1, t + 1):
     
     count = {}
     for p in printer:
-        count[p] = count.get(p, 0) + 1
+        if p in count:
+            count[p] += 1
+        else:
+            count[p] = 1
 
     answer = []
     
@@ -14,10 +17,12 @@ for i in range(1, t + 1):
         if count[p] == 0:
             continue
         
-        target = p * 4 // 3
-        if p * 4 % 3 == 0 and count.get(target, 0) > 0:
-            answer.append(p)
-            count[p] -= 1
-            count[target] -= 1
-    print(f'#{i} ', end='')
+        if (p * 4) % 3 == 0:
+            target = (p * 4) // 3
+            
+            if target in count and count[target] > 0:
+                answer.append(p)
+                count[p] -= 1
+                count[target] -= 1
+    print(f'#{i} ', end='')   
     print(*answer)
