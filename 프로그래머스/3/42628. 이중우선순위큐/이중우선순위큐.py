@@ -10,7 +10,7 @@ def solution(operations):
         if operator == 'I':
             heapq.heappush(heap, operand)
         elif heap:
-            if operand < 0:
+            if operand == -1:
                 heapq.heappop(heap)
             else:
                 heap.remove(max(heap))
