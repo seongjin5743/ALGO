@@ -14,15 +14,15 @@ def solution(N, road, K):
 
     while queue:
         dist, now = heapq.heappop(queue)
-
+        
         if dist > distance[now]:
             continue
-
+        
         for nxt, cost in graph[now]:
-            new_dist = dist + cost
-
-            if new_dist < distance[nxt]:
-                distance[nxt] = new_dist
-                heapq.heappush(queue, (new_dist, nxt))
+            n_dist = dist + cost
+            
+            if n_dist < distance[nxt]:
+                distance[nxt] = n_dist
+                heapq.heappush(queue, (n_dist, nxt))
 
     return sum(1 for d in distance[1:] if d <= K)
