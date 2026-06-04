@@ -1,18 +1,9 @@
+from collections import Counter
+
 def solution(X, Y):
     answer = ''
-    x_c = {}
-    y_c = {}
-    
-    for x in X:
-        if x not in x_c:
-            x_c[x] = 1
-        else:
-            x_c[x] += 1
-    for y in Y:
-        if y not in y_c:
-            y_c[y] = 1
-        else:
-            y_c[y] += 1
+    x_c = Counter(X)
+    y_c = Counter(Y)
     
     for i in range(9, -1, -1):
         temp = str(i)
