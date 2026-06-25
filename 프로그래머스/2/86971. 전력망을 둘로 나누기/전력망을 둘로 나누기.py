@@ -1,6 +1,5 @@
 from collections import deque
 
-
 def solution(n, wires):
     answer = 100
     graph = [[] for _ in range(n + 1)]
