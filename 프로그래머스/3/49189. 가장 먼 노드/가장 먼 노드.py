@@ -1,23 +1,38 @@
 from collections import deque
 
-def solution(n, edge):
+def solution(n, vertex):
     graph = [[] for _ in range(n + 1)]
     
-    for x, y in edge:
+    visited = [False] * (n + 1)
+    
+    for x, y in vertex:
         graph[x].append(y)
         graph[y].append(x)
+
+    answer = []
     
-    distance = [-1] * (n + 1)
+    def bfs(x):
+        queue = deque()
+        queue.append((x, 0))
+        visited[x] = True
+        
+        while queue:
+            x, cnt = queue.popleft()
+            answer.append((x, cnt))
+            for i in graph[x]:
+                if not visited[i]:
+                    queue.append((i, cnt + 1))
+                    visited[i] = True
+          
+    bfs(1)
     
-    queue = deque([1])
-    distance[1] = 0
+    max_dis = 0
     
-    while queue:
-        cur = queue.popleft()
-        for nxt in graph[cur]:
-            if distance[nxt] == -1:
-                distance[nxt] = distance[cur] + 1
-                queue.append(nxt)
+    for x, dis in answer:
+        max_dis = max(dis, max_dis)
     
-    max_dist = max(distance)
-    return distance.count(max_dist)
+    count = 0
+    for x, dis in answer:
+        if dis == max_dis:
+            count += 1
+    return count
