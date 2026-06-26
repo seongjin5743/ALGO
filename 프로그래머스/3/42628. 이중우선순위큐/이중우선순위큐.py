@@ -1,21 +1,23 @@
 import heapq
 
 def solution(operations):
-    heap = []
+    queue = []
 
-    for operation in operations:
-        operator, operand = operation.split(' ')
-        operand = int(operand)
+    for op in operations:
+        cmd, num = op.split()
+        num = int(num)
 
-        if operator == 'I':
-            heapq.heappush(heap, operand)
-        elif heap:
-            if operand == -1:
-                heapq.heappop(heap)
+        if cmd == 'I':
+            heapq.heappush(queue, num)
+
+        elif queue:
+            if num == -1:
+                heapq.heappop(queue)
             else:
-                heap.remove(max(heap))
+                queue.remove(max(queue))
+                heapq.heapify(queue)
 
-    if not heap:
+    if not queue:
         return [0, 0]
 
-    return [max(heap), heap[0]]
+    return [max(queue), queue[0]]
