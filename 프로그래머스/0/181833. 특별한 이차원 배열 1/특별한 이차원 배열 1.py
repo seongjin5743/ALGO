@@ -1,5 +1,5 @@
 def solution(n):
     answer = [[0] * n for _ in range(n)]
-    for i in range(n):
-        answer[i][i] = 1
+    for x in range(n):
+        answer[x][x] = 1
     return answer
