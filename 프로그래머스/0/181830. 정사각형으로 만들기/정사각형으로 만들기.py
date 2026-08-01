@@ -1,11 +1,10 @@
 def solution(arr):
-    a, b = len(arr), len(arr[0])
-    if a == b:
+    rows, cols = len(arr), len(arr[0])
+    
+    if rows == cols:
         return arr
-    elif a > b:
-        for i in range(a):
-            arr[i] += [0] * (a - b)
-    else:
-        for _ in range(b - a):
-            arr.append([0 for _ in range(b)])
-    return arr
+    
+    if rows > cols:
+        return [row + [0] * (rows - cols) for row in arr]
+    
+    return arr + [[0] * cols for _ in range(cols - rows)]
