@@ -18,7 +18,7 @@ def solution(maps):
             for i in range(4):
                 nx, ny = x + dx[i], y + dy[i]
                 
-                if 0 <= nx < len(maps[0]) and 0<= ny < len(maps) and not visited[ny][nx] and maps[y][x] == 1:
+                if 0 <= nx < len(maps[0]) and 0 <= ny < len(maps) and not visited[ny][nx] and maps[y][x] == 1:
                     queue.append((nx, ny, answer + 1))
                     visited[ny][nx] = True
         return -1
